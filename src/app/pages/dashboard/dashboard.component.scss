@@ -1,0 +1,54 @@
+@import '../../../assets/scss/base';
+
+.dashboard {
+  padding: 2rem;
+  width: 90%;
+
+  @include breakpoint(md) {
+    width: 80%;
+  }
+}
+
+.stats-area {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.stat {
+  height: 80px;
+  width: 155px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  color: var(--pry);
+  position: relative;
+  padding-top: 1rem;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.stat-type {
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 50%;
+  background: transparent;
+  position: absolute;
+  height: 8px;
+  width: 8px;
+  top: 1rem;
+  right: 1rem;
+}
+
+.open { border-color: #EE5BCE; }
+.in-progress { border-color: #5BA8EE; }
+.done { border-color: #86ED47; }

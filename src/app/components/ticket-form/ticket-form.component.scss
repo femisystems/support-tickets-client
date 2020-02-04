@@ -1,0 +1,72 @@
+@import '../../../assets/scss/base';
+
+.form-group {
+  label {
+    display: block;
+    width: 100%;
+    padding: .3rem 0;
+  }
+
+  label, input, select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  input, select, textarea {
+    border-radius: 5px;
+    border: 1px solid var(--border-pry);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-width: 2px;
+  }
+
+  input, select {
+    height: 40px;
+  }
+
+  textarea {
+    resize: none;
+    height: 120px;
+  }
+}
+
+.form-group-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-group, .form-group-flex {
+  padding: .3rem 0;
+}
+
+.form-w-half {
+  width: 45%;
+}
+
+.form-w-full {
+  width: 100%;
+}
+
+.form-submit {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-cta {
+  background: var(--pry);
+  color: white;
+}
+
+.form-error {
+  color: red;
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background-color: transparentize( #000000, 0.8);
+}

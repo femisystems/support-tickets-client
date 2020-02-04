@@ -1,0 +1,75 @@
+<h3 class="page-title">{{ title }}</h3>
+<section class="page-container container-shadow">
+  <div *ngIf="supportTickets.length">
+    <div class="search-component">
+      <input #searchInput type="text" (keyup)="search(searchInput.value)" placeholder="Search tickets">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket ID #</th>
+          <th>Title</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="!searchResult.length">
+          <tr (click)="goto(ticket.id)" *ngFor="let ticket of supportTickets" class="ticket-row">
+            <td class="id-col">{{ ticket.id }}</td>
+            <td class="title-col">{{ ticket.title }}</td>
+            <td class="priority-col">
+              <div class="label-rect label-rect-low" *ngIf="ticket.priority === 0">Low</div>
+              <div class="label-rect label-rect-high" *ngIf="ticket.priority === 1">High</div>
+              <div class="label-rect label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
+            </td>
+            <td class="status-col">{{ ticket.status }}</td>
+            <td class="action-col">
+              <button class="btn btn-edit" (click)="goto(ticket.id, true)">View</button>
+              <button
+                class="btn btn-delete"
+                [disabled]="deletingTicket === ticket.id"
+                [ngClass]="{ 'disabled': deletingTicket === ticket.id }"
+                [swal]="{ title: 'Delete Ticket?', text: 'This action cannot be undone.', icon: 'question', showCancelButton: true }"
+                (confirm)="deleteTicket($event, ticket.id)"
+                (cancel)="dismiss($event)">Delete
+              </button>
+              <span *ngIf="deletingTicket === ticket.id">Deleting...</span>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="searchResult.length">
+          <tr (click)="goto(ticket.id)" *ngFor="let ticket of searchResult" class="ticket-row">
+            <td class="id-col">{{ ticket.id }}</td>
+            <td class="title-col">{{ ticket.title }}</td>
+            <td class="priority-col">
+              <div class="label-rect label-rect-low" *ngIf="ticket.priority === 0">Low</div>
+              <div class="label-rect label-rect-high" *ngIf="ticket.priority === 1">High</div>
+              <div class="label-rect label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
+            </td>
+            <td class="status-col">{{ ticket.status }}</td>
+            <td class="action-col">
+              <button class="btn btn-edit" (click)="goto(ticket.id, true)">View</button>
+              <button
+                class="btn btn-delete"
+                [disabled]="deletingTicket === ticket.id"
+                [ngClass]="{ 'disabled': deletingTicket === ticket.id }"
+                [swal]="{ title: 'Delete Ticket?', text: 'This action cannot be undone.', icon: 'question', showCancelButton: true }"
+                (confirm)="deleteTicket($event, ticket.id)"
+                (cancel)="dismiss($event)">Delete
+              </button>
+              <span *ngIf="deletingTicket === ticket.id">Deleting...</span>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div class="notification-box notification-box-md default-msg" *ngIf="!supportTickets.length">
+      There are currently no tickets available!
+    </div>
+  </div>
+  <div class="notification-box notification-box-md error-msg" *ngIf="ticketLoadError.length">
+    {{ ticketLoadError }}
+  </div>
+</section>

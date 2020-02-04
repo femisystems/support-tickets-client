@@ -1,0 +1,11 @@
+<section class="dashboard">
+  <div class="stats-area" *ngIf="ticketStats$ | async as stats">
+    <div *ngFor="let stat of stats" class="stat container-shadow">
+      <div class="stat-value">{{ stat.value }}</div>
+      <div class="stat-label">{{ stat.label }}</div>
+      <div *ngIf="stat.type === 0" class="stat-type open"></div>
+      <div *ngIf="stat.type === 1" class="stat-type in-progress"></div>
+      <div *ngIf="stat.type === 2" class="stat-type done"></div>
+    </div>
+  </div>
+</section>

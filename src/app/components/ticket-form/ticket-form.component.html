@@ -1,0 +1,52 @@
+<div class="form-wrapper">
+  <!-- <div *ngIf="successMsg.length" class="notification-box-md notification-box default-msg">{{ successMsg }}</div>
+  <div *ngIf="failureMsg.length" class="notification-box-md notification-box error-msg">{{ failureMsg }}</div> -->
+  <form (ngSubmit)="onSubmit()" [formGroup]="ticketForm">
+    <div class="form-group form-w-full">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title">
+      <div *ngIf="isDirtyAndInvalid('title') && hasError('title', 'required')" class="form-error">{{ errors.required }}</div>
+    </div>
+    <div class="form-group form-w-full">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="isDirtyAndInvalid('description') && hasError('description', 'required')" class="form-error">{{ errors.required }}</div>
+    </div>
+    <div class="form-group-flex form-w-full">
+      <div class="form-group form-w-half">
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority">
+          <option [value]="'low'">low</option>
+          <option [value]="'high'">high</option>
+          <option [value]="'critical'">critical</option>
+        </select>
+        <div *ngIf="isDirtyAndInvalid('priority') && hasError('priority', 'required')" class="form-error">{{ errors.required }}</div>
+      </div>
+      <div class="form-group form-w-half">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          <option [value]="'open'">open</option>
+          <option [value]="'inprogress'">in-progress</option>
+          <option [value]="'done'">done</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form-w-full">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email">
+      <div *ngIf="isDirtyAndInvalid('email') && hasError('email', 'required')" class="form-error">{{ errors.required }}</div>
+      <div *ngIf="isDirtyAndInvalid('email') && hasError('email', 'email')" class="form-error">{{ errors.email }}</div>
+    </div>
+    <div class="form-group form-w-full">
+      <label for="refersTo">Refers To</label>
+      <input id="refersTo" type="number" formControlName="refersTo">
+      <div *ngIf="isDirtyAndInvalid('refersTo') && hasError('refersTo', 'refersError')" class="form-error">{{ errors.refersError }}</div>
+    </div>
+    <div class="form-submit">
+      <span *ngIf="savingForm">...saving</span>
+      <button [ngClass]="{ disabled: submitDisabled()}" [disabled]="submitDisabled()" class="btn-cta" type="submit">
+        {{ mode === 1 ? 'Submit' : 'Update' }}
+      </button>
+    </div>
+  </form>
+</div>

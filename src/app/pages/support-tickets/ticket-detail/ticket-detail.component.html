@@ -1,0 +1,46 @@
+<h1 class="page-title">{{ title }}</h1>
+<section class="page-container container-shadow">
+  <div *ngIf="ticket$ | async as ticket">
+    <!-- preview mode -->
+    <ng-container *ngIf="isPreviewMode">
+      <div class="detail-header">
+        <div class="meta-data">
+          <ul>
+            <li><div>Ticket ID <strong>#{{ ticket.id }}</strong></div></li>
+            <li><div>Priority <strong>{{ ticket.priority }}</strong></div></li>
+            <li><div>Status <strong>{{ ticket.status }}</strong></div></li>
+            <li><div>Refers to <strong>{{ ticket.refersTo[0] || '' }}</strong></div></li>
+          </ul>
+        </div>
+        <button (click)="isPreviewMode = false">Edit Details</button>
+      </div>
+      <div class="detail-body">
+        <ul>
+          <li>
+            <div>Title</div>
+            <p>{{ ticket.title }}</p>
+          </li>
+          <li>
+            <div>Description</div>
+            <p>{{ ticket.description }}</p>
+          </li>
+          <li>
+            <div>Email</div>
+            <p>{{ ticket.email }}</p>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <!-- preview mode end -->
+
+    <!-- edit mode -->
+    <ng-container *ngIf="!isPreviewMode">
+      <app-ticket-form
+        [mode]="formMode"
+        [ticket]="transform(ticket)"
+        (success)="goBack(2000)">
+      </app-ticket-form>
+    </ng-container>
+    <!-- edit mode end -->
+  </div>
+</section>

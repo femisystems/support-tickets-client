@@ -1,0 +1,33 @@
+.side-panel {
+  width: 100%;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: block;
+}
+
+li a {
+  display: block;
+  text-decoration: none;
+  height: 48px;
+  width: 100%;
+  color: var(--pry);
+  border-left-color: var(--body);
+  border-left-width: 3px;
+  border-left-style: solid;
+  line-height: 48px;
+  padding-left: 2rem;
+  font-size: 14px;
+}
+
+li a.active {
+  border-left-color: var(--pry) !important;
+  font-weight: bold;
+}

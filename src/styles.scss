@@ -1,0 +1,156 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --pry: #606E92;
+  --body: #F3F5F6;
+  --border-pry: #E0E3EB;
+}
+
+@import './assets/scss/base';
+@import '~ngx-toastr/toastr';
+
+body {
+  margin: 0 auto;
+  font-family: 'Muli', sans-serif;
+  background: var(--body);
+}
+
+.page-title {
+  color: var(--pry);
+}
+
+.padding-lr-50 {
+  padding-left: toRem(50px);
+  padding-right: toRem(50px);
+}
+
+.padding-lr-25 {
+  padding-left: toRem(25px);
+  padding-right: toRem(25px);
+}
+
+.container-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
+}
+
+.app-header {
+  background: var(--pry);
+  height: toRem(80px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  @extend .padding-lr-25;
+
+  @include breakpoint(md) {
+    padding-left: toRem(50px);
+    padding-right: toRem(50px);
+  }
+}
+
+.page-container {
+  width: 90%;
+  border-radius: 10px;
+  height: 85%;
+  background: white;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.notification-box {
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  padding: 0 1rem;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  margin: 1rem auto;
+}
+
+.notification-box-md {
+  width: 50%;
+}
+
+.notification-box-lg {
+  width: 80%;
+}
+
+.error-msg {
+  border-color: hsl(360, 79, 80);
+  background: hsl(360, 79, 90);
+}
+
+.default-msg {
+  border-color: hsl(224, 22, 90);
+  background: hsl(224, 22, 98);
+}
+
+.label-rect {
+  width: 88px;
+  height: 28px;
+  line-height: 28px;
+  border-width: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  margin: 0 auto;
+}
+
+.label-rect-low {
+  border-color: hsl(209, 81, 80);
+  color: hsl(209, 81, 56);
+  background: hsl(209, 81, 90);
+}
+.label-rect-high {
+  border-color: hsl(29, 86, 80);
+  color: hsl(29, 86, 56);
+  background: hsl(29, 86, 90);
+}
+.label-rect-critical {
+  border-color: hsl(360, 88, 80);
+  color: hsl(360, 88, 56);
+  background: hsl(360, 88, 90);
+}
+
+.label-orb {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.label-orb-open {
+  border-color: #EE5BCE;
+}
+
+.label-orb-in-progress {
+  border-color: #5BA8EE;
+}
+
+.label-orb-done {
+  border-color: #86ED47;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  height: 40px;
+  width: 120px;
+}
+
+.form-wrapper {
+  width: 60%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+input, select, textarea {
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 5px;
+}
