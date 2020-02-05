@@ -18,19 +18,16 @@ export class TicketService {
   }
 
   getById(id: string): Observable<ISupportTicket> {
-    return this.http.get<ISupportTicket>(`${this.baseUrl}/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<ISupportTicket>(`${this.baseUrl}/${id}`);
   }
 
   create(payload: ISupportTicket) {
     const reqbody = payload;
-    return this.http.post<ISupportTicket>(this.baseUrl, reqbody)
-      .pipe(catchError(this.handleError));
+    return this.http.post<ISupportTicket>(this.baseUrl, reqbody);
   }
 
   update(id: string, payload): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, payload)
-      .pipe(catchError(this.handleError));
+    return this.http.put(`${this.baseUrl}/${id}`, payload);
   }
 
   delete(id: number) {
@@ -41,13 +38,5 @@ export class TicketService {
           return response;
         })
       );
-  }
-
-  handleError(err: any) {
-    const msg = err.error instanceof ErrorEvent ?
-      err.error.message :
-      err.message || err.statusText;
-
-    return throwError(msg);
   }
 }

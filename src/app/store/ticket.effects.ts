@@ -49,16 +49,17 @@ export class TicketEffects {
   search$ = createEffect(() => this.actions$.pipe(
     ofType(ticketActions.SEARCH),
     withLatestFrom(this.store),
-    filter(([search, state]) => search),
-    map(([search, state]) => {
+    map((payload) => {
+      const search: { searchStr: string, type: string } = payload[0];
+      const state = payload[1];
       let filtered = [];
-
+      
       if (search.searchStr.length) {
         filtered = state.tickets.filter(ticket => {
           const isInDescription = ticket.description.toLowerCase().indexOf(search.searchStr) > -1;
           const isInTitle = ticket.title.toLowerCase().indexOf(search.searchStr) > -1;
 
-          return isInTitle;
+          return isInTitle || isInDescription;
         });
       }
 

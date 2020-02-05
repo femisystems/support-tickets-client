@@ -22,16 +22,11 @@ interface State {
 })
 export class TicketsComponent implements OnInit {
   title = 'Support Tickets';
-  supportTickets: ISupportTicket[] = [];
-  ticketLoadError = '';
-  deletingTicket = '';
-  searchResult: ISupportTicket[] = [];
   
   tickets$: Observable<ISupportTicket[]>;
   errors$: Observable<IError>;
-  loader$: Observable<ILoader>;
   searchResult$: Observable<ISearchResult>;
-  isLoading: boolean = true;
+  loader$: Observable<ILoader>;
 
   constructor(
     private router: Router,
@@ -50,8 +45,6 @@ export class TicketsComponent implements OnInit {
     this.store.dispatch(ticketActions.loading());
     this.store.dispatch(ticketActions.getAll());
   }
-
-
 
   goto(ticketId: string, isEditMode: boolean = false) {
     let url = '/support-tickets';
