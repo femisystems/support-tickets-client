@@ -42,5 +42,4 @@ export class TicketDetailComponent implements OnInit {
       this.router.navigate(['/support-tickets']);
     }, delay);
   }
-
 }

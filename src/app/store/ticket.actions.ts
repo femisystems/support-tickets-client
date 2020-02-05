@@ -38,7 +38,7 @@ export const DOSEARCH = 'DOSEARCH'
  * 
  * * -------------------------------------------------------------------------
  */
-export const createTicket = createAction(TICKETS_CREATE, props<{ ticket: ISupportTicket }>());
+export const createTicket = createAction(TICKETS_CREATE, props<{ payload: ISupportTicket }>());
 export const createTicketSuccess = createAction(TICKETS_CREATE_SUCCESS, props<{ ticket: ISupportTicket }>());
 export const createTicketError = createAction(TICKETS_CREATE_FAILURE, props<{ error: string }>());
 export const getAll = createAction(TICKETS_GETALL);
@@ -46,7 +46,7 @@ export const getAllSuccess = createAction(TICKETS_GETALL_SUCCESS, props<{ ticket
 export const getAllFailure = createAction(TICKETS_GETALL_FAILURE, props<{ error: string }>());
 export const getById = createAction(TICKETS_GET_BY_ID, props<{ id: number }>());
 export const getByIdSuccess = createAction(TICKETS_GET_BY_ID_SUCCESS, props<{ ticket: ISupportTicket }>());
-export const update = createAction(TICKETS_UPDATE, props<{ id: number; ticket: ISupportTicket }>());
+export const update = createAction(TICKETS_UPDATE, props<{ id: number; payload: ISupportTicket }>());
 export const updateSuccess = createAction(TICKETS_UPDATE_SUCCESS, props<{ ticket: ISupportTicket }>());
 export const deleteTicket = createAction(TICKETS_DELETE, props<{ id: number }>());
 export const deleteTicketSuccess = createAction(TICKETS_DELETE_SUCCESS, props<{ id: number }>());

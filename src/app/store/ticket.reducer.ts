@@ -25,14 +25,14 @@ const getAllSuccessFn = (state: ITicket, { tickets }) => {
 
 
 const _ticketReducer = createReducer(ticketsInitialState,
-  // on(createTicketSuccess, (state, action) => [...state, ticket] ),
+  on(createTicketSuccess, (state, { ticket }) => [...state, ticket] ),
   on(getAllSuccess, getAllSuccessFn),
-  // on(updateSuccess, (state, { ticket }) => {
-  //   const newState = [...state];
-  //   const index = state.findIndex(member => member['id'] === ticket.id);
-  //   newState[index] = ticket;
-  //   return newState;
-  // }),
+  on(updateSuccess, (state, { ticket }) => {
+    const newState = [...state];
+    const index = state.findIndex(member => member['id'] === ticket.id);
+    newState[index] = ticket;
+    return newState;
+  }),
   on(deleteTicketSuccess, (state, { id }) => {
     const index = state.findIndex(member => member['id'] === id);
     const newState = [

@@ -22,8 +22,7 @@ export class TicketService {
   }
 
   create(payload: ISupportTicket) {
-    const reqbody = payload;
-    return this.http.post<ISupportTicket>(this.baseUrl, reqbody);
+    return this.http.post<ISupportTicket>(this.baseUrl, payload);
   }
 
   update(id: string, payload): Observable<any> {
