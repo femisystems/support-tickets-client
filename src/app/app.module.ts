@@ -11,6 +11,13 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { TicketService } from './services/ticket.service';
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import * as fromTicketReducer from './store/ticket.reducer';
+import { environment } from 'src/environments/environment';
+import { TicketEffects } from './store/ticket.effects';
+import { StatsGeneratorPipe } from './pipes/stats-generator.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +26,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     HeaderComponent,
     SidePanelComponent,
     PageNotFoundComponent,
+    StatsGeneratorPipe,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +38,18 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    StoreModule.forRoot({
+      tickets: fromTicketReducer.ticketReducer,
+      errors: fromTicketReducer.errorReducer,
+      loader: fromTicketReducer.loaderReducer,
+      searchResult: fromTicketReducer.searchReducer
+    }),
+    EffectsModule.forRoot([TicketEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [TicketService],
   bootstrap: [AppComponent]

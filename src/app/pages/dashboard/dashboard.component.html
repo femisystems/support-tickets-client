@@ -1,5 +1,5 @@
 <section class="dashboard">
-  <div class="stats-area" *ngIf="ticketStats$ | async as stats">
+  <div class="stats-area" *ngIf="tickets$ | async | statsGenerator as stats">
     <div *ngFor="let stat of stats" class="stat container-shadow">
       <div class="stat-value">{{ stat.value }}</div>
       <div class="stat-label">{{ stat.label }}</div>

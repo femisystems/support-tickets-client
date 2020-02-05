@@ -9,9 +9,5 @@ import { TicketService } from './services/ticket.service';
 export class AppComponent {
   title = 'support-tickets-app';
 
-  constructor(private ticketService: TicketService) {}
-
-  ngOnInit() {
-    this.ticketService.all().subscribe();
-  }
+  constructor() {}
 }

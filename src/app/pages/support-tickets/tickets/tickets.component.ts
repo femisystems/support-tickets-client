@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, EMPTY, of, interval } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { Observable, of, interval } from 'rxjs';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
-import { TicketService } from 'src/app/services/ticket.service';
-import { catchError, tap, throttle, map } from 'rxjs/operators';
+import { throttle, map, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import * as ticketActions from '../../../store/ticket.actions';
+import { IError, ILoader, ISearchResult } from 'src/app/store/ticket.reducer';
+
+interface State {
+  tickets: ISupportTicket[],
+  errors: IError,
+  loader: ILoader,
+  searchResult: ISearchResult
+}
 
 @Component({
   selector: 'app-tickets',
@@ -15,50 +24,34 @@ export class TicketsComponent implements OnInit {
   title = 'Support Tickets';
   supportTickets: ISupportTicket[] = [];
   ticketLoadError = '';
-  baseRoute = '/support-tickets';
   deletingTicket = '';
   searchResult: ISupportTicket[] = [];
+  
+  tickets$: Observable<ISupportTicket[]>;
+  errors$: Observable<IError>;
+  loader$: Observable<ILoader>;
+  searchResult$: Observable<ISearchResult>;
+  isLoading: boolean = true;
 
   constructor(
-    private ticketService: TicketService,
     private router: Router,
-    private toastr: ToastrService
+    private store: Store<State>
   ) {}
 
   ngOnInit() {
-    this.getSupportTickets();
+    this.loader$ = this.store.pipe(select('loader'));
+    this.tickets$ = this.store.pipe(select('tickets'));
+    this.errors$ = this.store.pipe(select('errors'));
+    this.searchResult$ = this.store.pipe(select('searchResult'));
+    this.loadTickets();
   }
 
-  getSupportTickets() {
-    this.ticketService.all()
-      .pipe(
-        catchError(error => {
-          this.ticketLoadError = error;
-          return EMPTY;
-        })
-      ).subscribe(supportTickets => this.supportTickets = supportTickets);
+  loadTickets() {
+    this.store.dispatch(ticketActions.loading());
+    this.store.dispatch(ticketActions.getAll());
   }
 
-  search(input: string) {
-    of(input)
-      .pipe(
-        map(str => str.toLowerCase()),
-        throttle(str => interval(1000))
-      ).subscribe(str => {
-        if (str.length) {
-          const filtered = this.supportTickets.filter(ticket => {
-            const isInDescription = ticket.description.toLowerCase().indexOf(str) > -1;
-            const isInTitle = ticket.title.toLowerCase().indexOf(str) > -1;
 
-            return isInDescription || isInTitle;
-          });
-          this.searchResult = [...filtered];
-        } else {
-          this.searchResult = [];
-        }
-        console.log(this.searchResult);
-      });
-  }
 
   goto(ticketId: string, isEditMode: boolean = false) {
     let url = '/support-tickets';
@@ -71,16 +64,13 @@ export class TicketsComponent implements OnInit {
     }
   }
 
-  deleteTicket(event, ticketId: string) {
-    this.deletingTicket = ticketId;
-    this.ticketService.delete(ticketId)
-      .subscribe(
-        response => {
-          this.deletingTicket = '';
-          this.toastr.success('Ticket successfully deleted', 'Success');
-          this.getSupportTickets();
-        }
-      )
+  deleteTicket(event, id: number) {
+    this.store.dispatch(ticketActions.deleting())
+    this.store.dispatch(ticketActions.deleteTicket({ id }));
+  }
+
+  search(searchStr: string) {
+    this.store.dispatch(ticketActions.search({ searchStr }));
   }
 
   dismiss(event) { return }

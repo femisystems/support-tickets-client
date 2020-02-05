@@ -24,6 +24,10 @@ table {
   width: 100%;
   color: var(--pry);
   border-collapse: collapse;
+
+  thead, tbody, tr {
+    width: 100%;
+  }
 }
 
 table thead {

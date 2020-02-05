@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TicketService } from 'src/app/services/ticket.service';
+import { Store, select } from '@ngrx/store';
+import * as ticketActions from '../../store/ticket.actions';
+import * as ticketReducer from '../../store/ticket.reducer';
 import { Observable, of } from 'rxjs';
+import { ISupportTicket } from 'src/app/interfaces/ticket';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -8,15 +12,12 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  ticketStats$: Observable<any>;
+  tickets$: Observable<ISupportTicket[]>;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private store: Store<{tickets: ticketReducer.ITicket, loader: any}>) {}
 
   ngOnInit() {
-    this.getStats();
-  }
-
-  getStats() {
-    this.ticketStats$ = of(this.ticketService.stats);
+    this.tickets$ = this.store.pipe(select('tickets'));
+    this.store.dispatch(ticketActions.getAll());
   }
 }

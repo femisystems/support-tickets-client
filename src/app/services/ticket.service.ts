@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
 
@@ -8,22 +8,13 @@ import { ISupportTicket } from 'src/app/interfaces/ticket';
 export class TicketService {
   private readonly baseUrl = 'api/support-tickets';
   public supportTickets: Subject<ISupportTicket[]>;
-  public stats = [
-    { value: 0, label: 'open tickets', type: 0 },
-    { value: 0, label: 'in progress', type: 1 },
-    { value: 0, label: 'done', type: 2 }
-  ]
 
   constructor(private http: HttpClient) {
     this.supportTickets = new Subject();
   }
 
   all(): Observable<ISupportTicket[]> {
-    return this.http.get<ISupportTicket[]>(this.baseUrl)
-      .pipe(
-        tap(supportTickets => this.computeStats(supportTickets)),
-        catchError(this.handleError)
-      );
+    return this.http.get<ISupportTicket[]>(this.baseUrl);
   }
 
   getById(id: string): Observable<ISupportTicket> {
@@ -42,28 +33,14 @@ export class TicketService {
       .pipe(catchError(this.handleError));
   }
 
-  delete(id: string) {
+  delete(id: number) {
     return this.http.delete<any>(`${this.baseUrl}/${id}`)
       .pipe(
-        tap(response => {
-          console.log('DELETE RESPONSE ::', response);
-        }),
-        catchError(this.handleError)
+        map(response => {
+          response.id = id;
+          return response;
+        })
       );
-  }
-
-  computeStats(supportTickets: ISupportTicket[]) {
-    this.stats = [
-      { value: 0, label: 'open tickets', type: 0 },
-      { value: 0, label: 'in progress', type: 1 },
-      { value: 0, label: 'done', type: 2 }
-    ];
-
-    supportTickets.forEach(ticket => {
-      if (ticket.status === 0) this.stats[0].value += 1;
-      if (ticket.status === 1) this.stats[1].value += 1;
-      if (ticket.status === 2) this.stats[2].value += 1;
-    });
   }
 
   handleError(err: any) {
