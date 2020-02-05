@@ -4,10 +4,10 @@ import { Store, select } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { formMode } from 'src/app/interfaces/forms';
 import { ISupportTicket, PriorityType, StatusType } from 'src/app/interfaces/ticket';
-import { TicketService } from 'src/app/services/ticket.service';
-import { ToastrService } from 'ngx-toastr';
 import * as ticketActions from '../../store/ticket.actions';
 import { IError, ILoader } from 'src/app/store/ticket.reducer';
+import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 interface State {
   tickets: ISupportTicket[],
@@ -22,7 +22,7 @@ interface State {
 })
 export class TicketFormComponent implements OnInit {
   @Input() mode: formMode;
-  @Output() success = new EventEmitter();
+  @Output() redirect = new EventEmitter();
   _ticket = {
     id: 0,
     title: '',
@@ -33,19 +33,15 @@ export class TicketFormComponent implements OnInit {
     refersTo: []
   }
   ticketForm: FormGroup;
-  errors = {
+  formErrors = {
     required: 'This field is required',
     email: 'Email format is invalid. Ex user@somewhere.com',
     refersError: 'Value cannot be less than 0'
   };
-  successMsg = '';
-  failureMsg = '';
-  savingForm = false;
+  errors$: Observable<IError>;
 
   constructor(
     private formBuilder: FormBuilder,
-    private ticketService: TicketService,
-    private toastr: ToastrService,
     private store: Store<State>
   ) {}
 
@@ -103,7 +99,6 @@ export class TicketFormComponent implements OnInit {
 
   onSubmit() {
     if (this.ticketForm.dirty && this.ticketForm.valid) {
-      this.savingForm = true;
       const form = this.ticketForm.value;
       const formValue = Object.assign({}, form, {
         refersTo: [form.refersTo],
@@ -112,8 +107,26 @@ export class TicketFormComponent implements OnInit {
       });
 
       this.store.dispatch(ticketActions.saving());
-      this.mode === formMode.EDIT ? this.updateTicket(this.ticket.id, formValue) : this.createTicket(formValue);
-      this.ticketForm.reset();
+      if (this.mode === formMode.EDIT) {
+        this.updateTicket(this.ticket.id, formValue);
+        this.ticket = formValue;
+        this.triggerRedirect();
+      } else {
+        this.createTicket(formValue)
+        this.ticketForm.reset();
+      }
     }
+  }
+
+  triggerRedirect() {
+    this.store
+      .pipe(select('errors'))
+      .subscribe(
+        stateErrors => {
+          if (!stateErrors['isSaving']) {
+            setTimeout(() => this.redirect.emit(true), 1000);
+          }
+        }
+      )
   }
 }

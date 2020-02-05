@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ISupportTicket } from '../interfaces/ticket';
 import { IError, ILoader } from './ticket.reducer';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TicketEffects {
@@ -16,7 +17,8 @@ export class TicketEffects {
     private store: Store<{tickets: ISupportTicket[], errors: IError, loader: ILoader}>,
     private actions$: Actions,
     private ticketService: TicketService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   getAll$ = createEffect(() => this.actions$.pipe(

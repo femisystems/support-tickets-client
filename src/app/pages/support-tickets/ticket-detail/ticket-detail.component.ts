@@ -37,7 +37,7 @@ export class TicketDetailComponent implements OnInit {
     return transformed;
   }
 
-  goBack(delay: number) {
+  redirect(delay: number) {
     setTimeout(() => {
       this.router.navigate(['/support-tickets']);
     }, delay);

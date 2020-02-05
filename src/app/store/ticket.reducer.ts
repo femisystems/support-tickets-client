@@ -14,15 +14,11 @@ import {
 import { ISupportTicket } from '../interfaces/ticket';
 
 export type ITicket = ISupportTicket[];
-
-
 export const ticketsInitialState: ITicket = [];
 
 const getAllSuccessFn = (state: ITicket, { tickets }) => {
   return [...tickets]
 }
-
-
 
 const _ticketReducer = createReducer(ticketsInitialState,
   on(createTicketSuccess, (state, { ticket }) => [...state, ticket] ),
@@ -49,22 +45,17 @@ export function ticketReducer(state: ITicket, action: Action) {
 
 
 /*
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  * 
  * Error
  * 
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  */
-
 export type IError = {};
-
 export const errorInitialState: IError = {}
 
 const getAllFailureFn = (state: IError, { error }) => {
-  return {
-    ...state,
-    loadError: error
-  }
+  return { ...state, loadError: error }
 }
 
 const _errorReducer = createReducer(errorInitialState,
@@ -75,12 +66,13 @@ export function errorReducer(state: IError, action: Action) {
   return _errorReducer(state, action);
 }
 
+
 /*
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  * 
- * search
+ * Search
  * 
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  */
 export type ISearchResult = [];
 export const searchInitialState: ISearchResult = [];
@@ -96,15 +88,15 @@ export function searchReducer(state, action) {
   return _searchReducer(state, action)
 }
 
+
 /*
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  * 
  * loaders
  * 
- * ---------------------------
+ * ---------------------------------------------------------------------------------
  */
 export type ILoader = {};
-
 const loaderInitialState: ILoader = {};
 
 const loadingTickets = (state: ILoader) => {
@@ -131,4 +123,3 @@ const _loaderReducer = createReducer(loaderInitialState,
 export function loaderReducer(state: ILoader, action: Action) {
   return _loaderReducer(state, action);
 }
-
