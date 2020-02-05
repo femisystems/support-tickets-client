@@ -93,10 +93,15 @@ body {
   width: 88px;
   height: 28px;
   line-height: 28px;
+  margin: 0 auto;
+}
+
+.label-rect-bordered {
+  @extend .label-rect;
+  border-radius: 5px;
   border-width: 1px;
   border-radius: 5px;
   border-style: solid;
-  margin: 0 auto;
 }
 
 .label-rect-low {
@@ -113,6 +118,18 @@ body {
   border-color: hsl(360, 88, 80);
   color: hsl(360, 88, 56);
   background: hsl(360, 88, 90);
+}
+
+.label-open {
+  color: #EE5BCE;
+}
+
+.label-in-progress {
+  color: #5BA8EE;
+}
+
+.label-done {
+  color: #86ED47;
 }
 
 .label-orb {

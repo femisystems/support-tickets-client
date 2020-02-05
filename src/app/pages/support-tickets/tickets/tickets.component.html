@@ -20,11 +20,15 @@
             <td class="id-col">{{ ticket.id }}</td>
             <td class="title-col">{{ ticket.title }}</td>
             <td class="priority-col">
-              <div class="label-rect label-rect-low" *ngIf="ticket.priority === 0">Low</div>
-              <div class="label-rect label-rect-high" *ngIf="ticket.priority === 1">High</div>
-              <div class="label-rect label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
+              <div class="label-rect-bordered label-rect-low" *ngIf="ticket.priority === 0">Low</div>
+              <div class="label-rect-bordered label-rect-high" *ngIf="ticket.priority === 1">High</div>
+              <div class="label-rect-bordered label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
             </td>
-            <td class="status-col">{{ ticket.status }}</td>
+            <td class="status-col">
+              <div class="label-rect label-open" *ngIf="ticket.status === 0">Open</div>
+              <div class="label-rect label-in-progress" *ngIf="ticket.status === 1">In-progress</div>
+              <div class="label-rect label-done" *ngIf="ticket.status === 2">Done</div>
+            </td>
             <td class="action-col">
               <button class="btn btn-edit" (click)="goto(ticket.id, true)">View</button>
               <button
@@ -52,11 +56,15 @@
               <td class="id-col">{{ ticket.id }}</td>
               <td class="title-col">{{ ticket.title }}</td>
               <td class="priority-col">
-                <div class="label-rect label-rect-low" *ngIf="ticket.priority === 0">Low</div>
-                <div class="label-rect label-rect-high" *ngIf="ticket.priority === 1">High</div>
-                <div class="label-rect label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
+                <div class="label-rect-bordered label-rect-low" *ngIf="ticket.priority === 0">Low</div>
+                <div class="label-rect-bordered label-rect-high" *ngIf="ticket.priority === 1">High</div>
+                <div class="label-rect-bordered label-rect-critical" *ngIf="ticket.priority === 2">Critical</div>
               </td>
-              <td class="status-col">{{ ticket.status }}</td>
+              <td class="status-col">
+                <div class="label-rect label-open" *ngIf="ticket.status === 0">Open</div>
+                <div class="label-rect label-in-progress" *ngIf="ticket.status === 1">in-progress</div>
+                <div class="label-rect label-done" *ngIf="ticket.status === 2">done</div>
+              </td>
               <td class="action-col">
                 <button class="btn btn-edit" (click)="goto(ticket.id, true)">View</button>
                 <button
