@@ -7,7 +7,8 @@ import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { CommonModule } from '@angular/common';
 import { TicketFormComponent } from 'src/app/components/ticket-form/ticket-form.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 @NgModule({
   declarations: [
     SupporTicketsComponent,
@@ -16,7 +17,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
     AddTicketComponent,
     TicketsComponent,
     TicketDetailComponent,
-    TicketFormComponent
+    TicketFormComponent,
   ],
   imports: [
     CommonModule,

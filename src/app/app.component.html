@@ -1,9 +1,9 @@
-<app-header (toggleSidePanel)="log()"></app-header>
-<main>
-  <div class="navigation">
-    <app-side-panel></app-side-panel>
-  </div>  
-  <section class="content-area">
-    <router-outlet></router-outlet>
-  </section>
-</main>
+<div>
+  <app-header></app-header>
+  <main>
+    <div class="nav-area"><app-side-panel></app-side-panel></div>
+    <section class="content-area">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

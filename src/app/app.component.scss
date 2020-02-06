@@ -5,19 +5,3 @@ main {
   flex-flow: row nowrap;
   height: calc(100vh - #{toRem(80px)});
 }
-
-.navigation, .content-area {
-  height: 100%;
-}
-
-.navigation {
-  width: 250px;
-}
-
-.content-area {
-  width: 100%;
-
-  @include breakpoint(md) {
-    width: calc(100% - #{toRem(250px)});
-  }
-}

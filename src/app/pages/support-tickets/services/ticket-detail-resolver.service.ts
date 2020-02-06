@@ -3,7 +3,7 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { ISupportTicket } from 'src/app/interfaces/ticket';
 import { TicketService } from 'src/app/services/ticket.service';
 import { Observable, of, EMPTY } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -22,13 +22,9 @@ export class TicketDetailResolverService implements Resolve<ISupportTicket>{
     return this.ticketService.getById(id)
       .pipe(
         take(1),
-        map(supportTicket => {
-          if (supportTicket) {
-            return of(supportTicket)
-          } else {
-            this.router.navigate(['/support-tickets']);
-            return EMPTY;
-          }
+        map(supportTicket => of(supportTicket)),
+        catchError(error => {
+          return this.router.navigate(['/support-tickets']);
         })
       )
   }

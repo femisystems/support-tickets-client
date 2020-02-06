@@ -5,6 +5,7 @@ import { SupporTicketsComponent } from './support-tickets.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { TicketDetailResolverService } from './services/ticket-detail-resolver.service';
+import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -14,9 +15,10 @@ const routes: Routes = [
       { path: 'add', component: AddTicketComponent },
       { path: ':id', component: TicketDetailComponent, resolve: { ticket: TicketDetailResolverService } },
       { path: '', component: TicketsComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full' }
     ]
   },
-  { path: '', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
 
 @NgModule({

@@ -1,4 +1,4 @@
-<section class="dashboard">
+<div class="dashboard">
   <div class="stats-area" *ngIf="tickets$ | async | statsGenerator as stats">
     <div *ngFor="let stat of stats" class="stat container-shadow">
       <div class="stat-value">{{ stat.value }}</div>
@@ -8,4 +8,4 @@
       <div *ngIf="stat.type === 2" class="stat-type done"></div>
     </div>
   </div>
-</section>
+</div>
