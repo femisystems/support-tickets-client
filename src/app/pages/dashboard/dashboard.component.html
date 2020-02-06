@@ -1,11 +1,14 @@
 <div class="dashboard">
+  <h3>Dashboard</h3>
   <div class="stats-area" *ngIf="tickets$ | async | statsGenerator as stats">
-    <div *ngFor="let stat of stats" class="stat container-shadow">
-      <div class="stat-value">{{ stat.value }}</div>
-      <div class="stat-label">{{ stat.label }}</div>
-      <div *ngIf="stat.type === 0" class="stat-type open"></div>
-      <div *ngIf="stat.type === 1" class="stat-type in-progress"></div>
-      <div *ngIf="stat.type === 2" class="stat-type done"></div>
+    <div [attr.data-id]="i" *ngFor="let stat of stats; index as i" class="stat container-shadow">
+      <div class="stat-content">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+        <div *ngIf="stat.type === 0" class="stat-type open"></div>
+        <div [attr.data-id]="'1'" *ngIf="stat.type === 1" class="stat-type in-progress"></div>
+        <div [attr.data-id]="'2'" *ngIf="stat.type === 2" class="stat-type done"></div>
+      </div>
     </div>
   </div>
 </div>

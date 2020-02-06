@@ -61,8 +61,8 @@ body {
   @extend .padding-lr-25;
 
   @include breakpoint(md) {
-    padding-left: toRem(50px);
-    padding-right: toRem(50px);
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 

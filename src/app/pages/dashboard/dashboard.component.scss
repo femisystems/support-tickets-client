@@ -1,7 +1,6 @@
 @import '../../../assets/scss/base';
 
 .dashboard {
-  padding: 2rem;
   width: 90%;
 
   @include breakpoint(md) {
@@ -12,19 +11,36 @@
 .stats-area {
   display: flex;
   justify-content: space-between;
-  width: 500px;
-  margin: 0 auto;
+  width: 80%;
+  margin: 0;
 }
 
 .stat {
-  height: 80px;
-  width: 155px;
+  height: 200px;
+  width: 30.333%;
   background: white;
   border-radius: 10px;
   text-align: center;
   color: var(--pry);
   position: relative;
-  padding-top: 1rem;
+  display: flex;
+  justify-content: center;;
+  align-items: center;
+  transform: translateY(50px);
+  opacity: 0;
+  animation: slideUp .5s forwards;
+}
+
+.stat[data-id="0"] {
+  animation-delay: .2s;
+}
+
+.stat[data-id="1"] {
+  animation-delay: .4s;
+}
+
+.stat[data-id="2"] {
+  animation-delay: .6s;
 }
 
 .stat-value {
@@ -52,3 +68,7 @@
 .open { border-color: #EE5BCE; }
 .in-progress { border-color: #5BA8EE; }
 .done { border-color: #86ED47; }
+
+@keyframes slideUp {
+  100%{ transform: translateY(0); opacity: 1 }
+}

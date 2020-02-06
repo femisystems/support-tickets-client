@@ -2,12 +2,7 @@ import { Component, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: 'app-header',
-  template: `
-    <header class="app-header">
-      <div (click)="toggleSidePanel.emit()">T</div> &nbsp;
-      {{ title }}
-    </header>
-  `,
+  template: `<header class="app-header">{{ title }}</header>`,
   styles: []
 })
 export class HeaderComponent {
