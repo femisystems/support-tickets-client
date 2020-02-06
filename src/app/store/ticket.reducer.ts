@@ -1,9 +1,11 @@
 import { createReducer, on, Action } from '@ngrx/store';
 import {
   createTicketSuccess,
+  createTicketFailure,
   getAllSuccess,
   doSearch,
-  updateSuccess,
+  updateTicketSuccess,
+  updateTicketFailure,
   deleteTicketSuccess,
   getAllFailure,
   loading,
@@ -23,7 +25,7 @@ const getAllSuccessFn = (state: ITicket, { tickets }) => {
 const _ticketReducer = createReducer(ticketsInitialState,
   on(createTicketSuccess, (state, { ticket }) => [...state, ticket] ),
   on(getAllSuccess, getAllSuccessFn),
-  on(updateSuccess, (state, { ticket }) => {
+  on(updateTicketSuccess, (state, { ticket }) => {
     const newState = [...state];
     const index = state.findIndex(member => member['id'] === ticket.id);
     newState[index] = ticket;
@@ -54,12 +56,14 @@ export function ticketReducer(state: ITicket, action: Action) {
 export type IError = {};
 export const errorInitialState: IError = {}
 
-const getAllFailureFn = (state: IError, { error }) => {
-  return { ...state, loadError: error }
+const operationFailFn = (state: IError, { ctx, msg }) => {
+  return { ...state, ctx: msg };
 }
 
 const _errorReducer = createReducer(errorInitialState,
-  on(getAllFailure, getAllFailureFn)
+  on(getAllFailure, operationFailFn),
+  on(createTicketFailure, operationFailFn),
+  on(updateTicketFailure, operationFailFn)
 );
 
 export function errorReducer(state: IError, action: Action) {

@@ -15,6 +15,8 @@ interface State {
   loader: ILoader
 }
 
+const { AppErrors } = ticketActions;
+
 @Component({
   selector: 'app-ticket-form',
   templateUrl: './ticket-form.component.html',
@@ -90,7 +92,7 @@ export class TicketFormComponent implements OnInit {
   }
 
   updateTicket(id: number, payload: ISupportTicket) {
-    this.store.dispatch(ticketActions.update({ id, payload }))
+    this.store.dispatch(ticketActions.updateTicket({ id, payload }))
   }
 
   createTicket(payload: ISupportTicket) {
@@ -123,7 +125,7 @@ export class TicketFormComponent implements OnInit {
       .pipe(select('errors'))
       .subscribe(
         stateErrors => {
-          if (!stateErrors['isSaving']) {
+          if (!stateErrors[AppErrors.UPDATE_ERROR]) {
             setTimeout(() => this.redirect.emit(true), 1000);
           }
         }

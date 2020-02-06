@@ -10,6 +10,8 @@ import { ISupportTicket } from '../interfaces/ticket';
 import { IError, ILoader } from './ticket.reducer';
 import { Router } from '@angular/router';
 
+const { AppErrors } = ticketActions;
+
 @Injectable()
 export class TicketEffects {
 
@@ -29,7 +31,7 @@ export class TicketEffects {
           this.store.dispatch(ticketActions.done())
           return ticketActions.getAllSuccess({ tickets });
         }),
-        catchError(() => of(ticketActions.getAllFailure({ error: 'Unable to load support tickets' })))
+        catchError(() => of(ticketActions.getAllFailure({ ctx: AppErrors.LOAD_ERROR, msg: 'Unable to load support tickets' })))
       ))
     )
   );
@@ -39,13 +41,12 @@ export class TicketEffects {
     mergeMap(({ payload }) => this.ticketService.create(payload)
       .pipe(
         map(ticket => {
-          this.store.dispatch(ticketActions.done());
-          this.toastr.success('Ticket successfully created', 'Success');
+          this.dispatchSuccess('Ticket successfully created!')
           return ticketActions.createTicketSuccess({ ticket });
         }),
         catchError(() => {
           this.toastr.error('Unable to create ticket', 'Operation Failed');
-          return EMPTY;
+          return of(ticketActions.createTicketFailure({ ctx: AppErrors.CREATE_ERROR , msg: 'Unable to create tickets' }))
         })
       ))
     )
@@ -56,13 +57,12 @@ export class TicketEffects {
     mergeMap(({ id, payload }) => this.ticketService.update(id, payload)
       .pipe(
         map(ticket => {
-          this.store.dispatch(ticketActions.done());
-          this.toastr.success('Ticket successfully updated!', 'Success');
-          return ticketActions.updateSuccess({ ticket });
+          this.dispatchSuccess('Ticket successfully updated!')
+          return ticketActions.updateTicketSuccess({ ticket });
         }),
         catchError(() => {
           this.toastr.error('Unable to update ticket', 'Operation Failed');
-          return EMPTY;
+          return of(ticketActions.updateTicketFailure({ ctx: AppErrors.UPDATE_ERROR , msg: 'Unable to update ticket' }))
         })
       ))
     )
@@ -73,8 +73,7 @@ export class TicketEffects {
     mergeMap(({ id }) => this.ticketService.delete(id)
       .pipe(
         map(ticket => {
-          this.store.dispatch(ticketActions.done());
-          this.toastr.success('Ticket successfully deleted!', 'Success');
+          this.dispatchSuccess('Ticket successfully deleted!')
           return ticketActions.deleteTicketSuccess({ id: ticket.id });
         }),
         catchError(() => {
@@ -105,4 +104,9 @@ export class TicketEffects {
       return ticketActions.doSearch({ searchResult: [...filtered] });
     })
   ));
+
+  dispatchSuccess(successMsg: string) {
+    this.store.dispatch(ticketActions.done());
+    this.toastr.success(successMsg, 'Success');
+  }
 }
