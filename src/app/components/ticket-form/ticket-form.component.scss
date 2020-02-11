@@ -1,5 +1,11 @@
 @import '../../../assets/scss/base';
 
+.form-wrapper {
+  width: 60%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
 .form-group {
   label {
     display: block;

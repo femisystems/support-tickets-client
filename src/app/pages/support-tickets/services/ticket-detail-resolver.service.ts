@@ -17,15 +17,12 @@ export class TicketDetailResolverService implements Resolve<ISupportTicket>{
     ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISupportTicket> | any {
-    this.router
-    let id = route.paramMap.get('id');
+    const id = route.paramMap.get('id');
     return this.ticketService.getById(id)
       .pipe(
         take(1),
         map(supportTicket => of(supportTicket)),
-        catchError(error => {
-          return this.router.navigate(['/support-tickets']);
-        })
+        catchError(error => this.router.navigate(['/support-tickets']))
       )
   }
 }

@@ -48,24 +48,6 @@ body {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
 }
 
-.app-header {
-  background: var(--pry);
-  height: toRem(80px);
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  @extend .padding-lr-25;
-
-  @include breakpoint(md) {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
 .page-container {
   width: 90%;
   border-radius: 10px;
@@ -176,12 +158,6 @@ button {
   border-radius: 5px;
   height: 40px;
   width: 120px;
-}
-
-.form-wrapper {
-  width: 60%;
-  box-sizing: border-box;
-  margin: 0 auto;
 }
 
 input, select, textarea {
