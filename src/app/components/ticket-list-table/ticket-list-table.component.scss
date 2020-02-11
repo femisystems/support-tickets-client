@@ -1,31 +1,21 @@
-@import '../../../../assets/scss/base';
+@import '../../../assets/scss/base';
 
-.tickets {
-  width: 90%;
-  border-radius: 10px;
-  height: 80%;
-  background: white;
+a {
+  text-decoration: none;
+  color: var(--pry);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.search-component {
-  height: 75px;
-  border-bottom: 1px solid var(--border-pry);
-}
-
-/**
---------------------------------
-
-ticket list table
-
---------------------------------
-**/
 table {
   font-size: 14px;
   width: 100%;
   color: var(--pry);
   border-collapse: collapse;
 
-  thead, tbody, tr {
+  thead, tbody, tr  {
     width: 100%;
   }
 }
@@ -81,26 +71,5 @@ table {
 
   &:hover {
     color: hsl(360, 88, 56);
-  }
-}
-
-.search-component {
-  input {
-    width: 80%;
-    height: 40px;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--border-pry);
-
-    &:focus {
-      border-width: 2px;
-    }
-  }
-
-  @include breakpoint(md) {
-    input {
-      width: 50%;
-    }
   }
 }

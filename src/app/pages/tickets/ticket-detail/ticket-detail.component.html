@@ -2,7 +2,7 @@
 <section class="page-container container-shadow">
   <div *ngIf="ticket$ | async as ticket">
     <!-- preview mode -->
-    <ng-container *ngIf="isPreviewMode">
+    <ng-container *ngIf="!formMode">
       <div class="detail-header">
         <div class="meta-data">
           <ul>
@@ -12,7 +12,7 @@
             <li><div>Refers to <strong>{{ ticket.refersTo[0] || '' }}</strong></div></li>
           </ul>
         </div>
-        <button (click)="isPreviewMode = false">Edit Details</button>
+        <button (click)="formMode = 'edit'">Edit Details</button>
       </div>
       <div class="detail-body">
         <ul>
@@ -34,7 +34,7 @@
     <!-- preview mode end -->
 
     <!-- edit mode -->
-    <ng-container *ngIf="!isPreviewMode">
+    <ng-container *ngIf="formMode">
       <app-ticket-form
         [mode]="formMode"
         [ticket]="transform(ticket)"

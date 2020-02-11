@@ -1,31 +1,31 @@
 import { NgModule } from "@angular/core";
 import { AddTicketComponent } from './add-ticket/add-ticket.component';
-import { SupportTicketsRoutingModule } from './support-tickets-routing.module';
-import { SupporTicketsComponent } from './support-tickets.component';
-import { TicketsComponent } from './tickets/tickets.component';
+import { TicketsRoutingModule } from './tickets-routing.module';
+import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { CommonModule } from '@angular/common';
 import { TicketFormComponent } from 'src/app/components/ticket-form/ticket-form.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TicketListTableComponent } from 'src/app/components/ticket-list-table/ticket-list-table.component';
+
 
 @NgModule({
   declarations: [
-    SupporTicketsComponent,
-    TicketsComponent,
+    TicketListComponent,
     TicketDetailComponent,
     AddTicketComponent,
-    TicketsComponent,
     TicketDetailComponent,
     TicketFormComponent,
+    TicketListTableComponent
   ],
   imports: [
     CommonModule,
-    SupportTicketsRoutingModule,
+    TicketsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module
   ],
-  exports: [SupportTicketsRoutingModule]
+  exports: [TicketsRoutingModule]
 })
-export class SupportTicketsModule {}
+export class TicketsModule {}
