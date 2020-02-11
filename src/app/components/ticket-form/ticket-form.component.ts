@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
@@ -6,7 +6,7 @@ import { formMode } from 'src/app/interfaces/forms';
 import { ISupportTicket, PriorityType, StatusType } from 'src/app/interfaces/ticket';
 import * as ticketActions from '../../store/ticket.actions';
 import { IError, ILoader } from 'src/app/store/ticket.reducer';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 interface State {
@@ -22,7 +22,7 @@ const { AppErrors } = ticketActions;
   templateUrl: './ticket-form.component.html',
   styleUrls: ['./ticket-form.component.scss']
 })
-export class TicketFormComponent implements OnInit {
+export class TicketFormComponent implements OnInit, OnDestroy {
   @Input() mode: formMode;
   @Output() redirect = new EventEmitter();
   _ticket = {
@@ -41,6 +41,7 @@ export class TicketFormComponent implements OnInit {
     refersError: 'Value cannot be less than 0'
   };
   errors$: Observable<IError>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,6 +59,10 @@ export class TicketFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   createForm() {
@@ -121,14 +126,16 @@ export class TicketFormComponent implements OnInit {
   }
 
   triggerRedirect() {
-    this.store
-      .pipe(select('errors'))
-      .subscribe(
-        stateErrors => {
-          if (!stateErrors[AppErrors.UPDATE_ERROR]) {
-            setTimeout(() => this.redirect.emit(true), 1000);
+    this.subscriptions.push(
+      this.store
+        .pipe(select('errors'))
+        .subscribe(
+          stateErrors => {
+            if (!stateErrors[AppErrors.UPDATE_ERROR]) {
+              setTimeout(() => this.redirect.emit(true), 1000);
+            }
           }
-        }
-      )
+        )
+    )
   }
 }
