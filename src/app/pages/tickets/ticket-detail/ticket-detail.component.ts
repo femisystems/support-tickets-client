@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { formMode as Mode } from 'src/app/interfaces/forms';
 import { ISupportTicket, StatusType, PriorityType } from 'src/app/interfaces/ticket';
 
 @Component({
@@ -9,7 +8,7 @@ import { ISupportTicket, StatusType, PriorityType } from 'src/app/interfaces/tic
   templateUrl: './ticket-detail.component.html',
   styleUrls: ['./ticket-detail.component.scss']
 })
-export class TicketDetailComponent implements OnInit {
+export class TicketDetailComponent implements OnInit, OnDestroy {
   formMode: string;
   title = 'Ticket Detail';
   isPreviewMode: boolean = true;
@@ -26,6 +25,10 @@ export class TicketDetailComponent implements OnInit {
       this.route.queryParamMap.subscribe(res => this.formMode = res.get('mode')),
       this.route.data.subscribe(data => this.ticket$ = data.ticket)
     )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   transform(ticket: ISupportTicket): any {
