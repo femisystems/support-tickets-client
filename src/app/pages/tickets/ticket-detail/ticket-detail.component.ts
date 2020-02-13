@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { formMode } from 'src/app/interfaces/forms';
+import { Observable, Subscription } from 'rxjs';
 import { ISupportTicket, StatusType, PriorityType } from 'src/app/interfaces/ticket';
 
 @Component({
@@ -9,11 +8,12 @@ import { ISupportTicket, StatusType, PriorityType } from 'src/app/interfaces/tic
   templateUrl: './ticket-detail.component.html',
   styleUrls: ['./ticket-detail.component.scss']
 })
-export class TicketDetailComponent implements OnInit {
-  readonly formMode = formMode.EDIT;
+export class TicketDetailComponent implements OnInit, OnDestroy {
+  formMode: string;
   title = 'Ticket Detail';
   isPreviewMode: boolean = true;
   ticket$: Observable<any>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,9 +21,14 @@ export class TicketDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.ticket$ = data.ticket
-    });
+    this.subscriptions.push(
+      this.route.queryParamMap.subscribe(res => this.formMode = res.get('mode')),
+      this.route.data.subscribe(data => this.ticket$ = data.ticket)
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   transform(ticket: ISupportTicket): any {
@@ -39,7 +44,7 @@ export class TicketDetailComponent implements OnInit {
 
   redirect(delay: number) {
     setTimeout(() => {
-      this.router.navigate(['/support-tickets']);
+      this.router.navigate(['/tickets']);
     }, delay);
   }
 }

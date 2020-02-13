@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, of, interval } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
-import { throttle, map, tap } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
 import * as ticketActions from '../../../store/ticket.actions';
 import { IError, ILoader, ISearchResult } from 'src/app/store/ticket.reducer';
 
@@ -16,22 +13,18 @@ interface State {
 }
 
 @Component({
-  selector: 'app-tickets',
-  templateUrl: './tickets.component.html',
-  styleUrls: ['./tickets.component.scss']
+  selector: 'app-ticket-list',
+  templateUrl: './ticket-list.component.html',
+  styleUrls: ['./ticket-list.component.scss']
 })
-export class TicketsComponent implements OnInit {
+export class TicketListComponent implements OnInit {
   title = 'Support Tickets';
-  
   tickets$: Observable<ISupportTicket[]>;
   errors$: Observable<IError>;
   searchResult$: Observable<ISearchResult>;
   loader$: Observable<ILoader>;
 
-  constructor(
-    private router: Router,
-    private store: Store<State>
-  ) {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.loader$ = this.store.pipe(select('loader'));
@@ -46,20 +39,9 @@ export class TicketsComponent implements OnInit {
     this.store.dispatch(ticketActions.getAll());
   }
 
-  goto(ticketId: string, isEditMode: boolean = false) {
-    let url = '/support-tickets';
-
-    if (isEditMode) {
-      url = `${url}/${ticketId}`;
-      this.router.navigate([url, { queryParams: { mode: 'edit' }}]);
-    } else {
-      this.router.navigate([url, ticketId]);
-    }
-  }
-
-  deleteTicket(event, id: number) {
-    this.store.dispatch(ticketActions.deleting())
-    this.store.dispatch(ticketActions.deleteTicket({ id }));
+  deleteTicket(event) {
+    this.store.dispatch(ticketActions.deleting());
+    this.store.dispatch(ticketActions.deleteTicket({ id: event.id }));
   }
 
   search(searchStr: string) {

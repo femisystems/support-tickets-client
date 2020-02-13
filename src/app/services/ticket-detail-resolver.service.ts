@@ -22,7 +22,7 @@ export class TicketDetailResolverService implements Resolve<ISupportTicket>{
       .pipe(
         take(1),
         map(supportTicket => of(supportTicket)),
-        catchError(error => this.router.navigate(['/support-tickets']))
+        catchError(error => this.router.navigate(['/tickets']))
       )
   }
 }

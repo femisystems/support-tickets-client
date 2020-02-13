@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <h3>Dashboard</h3>
+  <h3 class="page-title">Dashboard</h3>
   <div class="stats-area" *ngIf="tickets$ | async | statsGenerator as stats">
     <div [attr.data-id]="i" *ngFor="let stat of stats; index as i" class="stat container-shadow">
       <div class="stat-content">

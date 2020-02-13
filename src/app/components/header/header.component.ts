@@ -6,7 +6,7 @@ import { Component, Output, EventEmitter } from "@angular/core";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  title = 'SUPPORT TICKETS MANAGER';
+  title = 'Support Tickets Manager';
   @Output() toggleSidePanel: EventEmitter<any>;
 
   constructor() {
