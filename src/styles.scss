@@ -14,22 +14,6 @@ body {
   background: var(--body);
 }
 
-.nav-area {
-  width: 250px;
-}
-
-.nav-area, .content-area {
-  height: 100%;
-}
-
-.content-area {
-  width: 100%;
-
-  @include breakpoint(md) {
-    width: calc(100% - #{toRem(250px)});
-  }
-}
-
 .page-title {
   color: var(--pry);
 }

@@ -29,8 +29,7 @@
           [disabled]="deletingTicket === ticket.id"
           [ngClass]="{ 'disabled': deletingTicket === ticket.id }"
           [swal]="{ title: 'Delete Ticket?', text: 'This action cannot be undone.', icon: 'question', showCancelButton: true }"
-          (confirm)="removeTicket($event, ticket.id)"
-          (cancel)="dismiss($event)">Delete
+          (confirm)="removeTicket($event, ticket.id)">Delete
         </button>
         <span *ngIf="deletingTicket === ticket.id">Deleting...</span>
       </td>

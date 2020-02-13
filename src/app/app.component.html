@@ -1,11 +1,9 @@
 <div>
-  <app-header></app-header>
-  <main>
-    <div class="nav-area">
-      <router-outlet name="sidepanel"></router-outlet>
-    </div>
-    <section class="content-area">
+  <router-outlet name="header"></router-outlet>
+  <div class="app-body__container">
+    <router-outlet name="sidepanel"></router-outlet>
+    <main>
       <router-outlet></router-outlet>
-    </section>
-  </main>
+    </main>
+  </div>
 </div>

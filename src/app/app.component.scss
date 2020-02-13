@@ -1,7 +1,15 @@
 @import '../assets/scss/base';
 
-main {
+.app-body__container {
   display: flex;
   flex-flow: row nowrap;
   height: calc(100vh - #{toRem(80px)});
+}
+
+main {
+  width: 100%;
+
+  @include breakpoint(md) {
+    width: calc(100% - #{toRem(250px)});
+  }
 }

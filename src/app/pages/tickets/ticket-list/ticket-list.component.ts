@@ -47,6 +47,4 @@ export class TicketListComponent implements OnInit {
   search(searchStr: string) {
     this.store.dispatch(ticketActions.search({ searchStr }));
   }
-
-  dismiss(event) { return }
 }
