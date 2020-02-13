@@ -3,7 +3,6 @@ import {
   createTicketSuccess,
   createTicketFailure,
   getAllSuccess,
-  doSearch,
   updateTicketSuccess,
   updateTicketFailure,
   deleteTicketSuccess,
@@ -69,29 +68,6 @@ const _errorReducer = createReducer(errorInitialState,
 export function errorReducer(state: IError, action: Action) {
   return _errorReducer(state, action);
 }
-
-
-/*
- * ---------------------------------------------------------------------------------
- * 
- * Search
- * 
- * ---------------------------------------------------------------------------------
- */
-export type ISearchResult = [];
-export const searchInitialState: ISearchResult = [];
-const getSearchResult = (state: ISearchResult, { searchResult }) => {
-  return [ ...searchResult ];
-}
-
-const _searchReducer = createReducer(searchInitialState,
-  on(doSearch, getSearchResult)
-);
-
-export function searchReducer(state, action) {
-  return _searchReducer(state, action)
-}
-
 
 /*
  * ---------------------------------------------------------------------------------

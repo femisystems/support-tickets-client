@@ -33,8 +33,6 @@ export const LOADING = 'LOADING';
 export const DELETING = 'DELETING';
 export const SAVING = 'SAVING';
 export const DONE = 'DONE';
-export const SEARCH = 'SEARCH'
-export const DOSEARCH = 'DOSEARCH'
 
 /**
  * -------------------------------------------------------------------------
@@ -62,5 +60,3 @@ export const loading = createAction(LOADING);
 export const deleting = createAction(DELETING);
 export const saving = createAction(SAVING);
 export const done = createAction(DONE);
-export const search = createAction(SEARCH, props<{ searchStr: string}>());
-export const doSearch = createAction(DOSEARCH, props<{ searchResult: ISupportTicket[] }>());

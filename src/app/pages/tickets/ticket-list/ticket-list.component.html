@@ -1,31 +1,18 @@
 <h3 class="page-title">{{ title }}</h3>
 <section class="page-container container-shadow">  
   <div class="search-component">
-    <input #searchInput type="text" (keyup)="search(searchInput.value)" placeholder="Search tickets">
+    <input #searchInput type="text" [(ngModel)]="searchStr" placeholder="Search tickets">
   </div>
-  <ng-container *ngIf="searchResult$ | async as searchResult">
-    <!-- TICKET SEARCH RESULT -->
-    <ng-container *ngIf="searchResult.length">
-      <app-ticket-list-table
-        *ngIf="searchResult.length"
-        [ticketList]="searchResult"
-        [deletingTicket]="deletingTicket"
-        (deleteTicket)="deleteTicket($event)">
-      </app-ticket-list-table>
-    </ng-container>
-    
-    <!-- TICKET LIST -->
-    <ng-container *ngIf="!searchResult.length">
-      <ng-container *ngIf="tickets$ | async as tickets">
-        <div *ngIf="!tickets.length" class="notification-box notification-box-md default-msg">There are currently no tickets available!</div>
-        <app-ticket-list-table
-          *ngIf="tickets.length"
-          [ticketList]="tickets"
-          [deletingTicket]="deletingTicket"
-          (deleteTicket)="deleteTicket($event)">
-        </app-ticket-list-table>
-      </ng-container>
-    </ng-container>
+
+  <!-- TICKET LIST -->
+  <ng-container *ngIf="tickets$ | async | searchFilter:searchStr as tickets">
+    <div *ngIf="!tickets.length" class="notification-box notification-box-md default-msg">There are currently no tickets available!</div>
+    <app-ticket-list-table
+      *ngIf="tickets.length"
+      [ticketList]="tickets"
+      [deletingTicket]="deletingTicket"
+      (deleteTicket)="deleteTicket($event)">
+    </app-ticket-list-table>
   </ng-container>
 
   <div *ngIf="errors$ | async as errors">

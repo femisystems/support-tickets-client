@@ -43,7 +43,6 @@ import { StatsGeneratorPipe } from './pipes/stats-generator.pipe';
       tickets: fromTicketReducer.ticketReducer,
       errors: fromTicketReducer.errorReducer,
       loader: fromTicketReducer.loaderReducer,
-      searchResult: fromTicketReducer.searchReducer
     }),
     EffectsModule.forRoot([TicketEffects]),
     StoreDevtoolsModule.instrument({

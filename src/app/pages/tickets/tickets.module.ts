@@ -8,6 +8,7 @@ import { TicketFormComponent } from 'src/app/components/ticket-form/ticket-form.
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TicketListTableComponent } from 'src/app/components/ticket-list-table/ticket-list-table.component';
+import { SearchFilter } from 'src/app/pipes/search-filter.pipe';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TicketListTableComponent } from 'src/app/components/ticket-list-table/t
     AddTicketComponent,
     TicketDetailComponent,
     TicketFormComponent,
-    TicketListTableComponent
+    TicketListTableComponent,
+    SearchFilter
   ],
   imports: [
     CommonModule,

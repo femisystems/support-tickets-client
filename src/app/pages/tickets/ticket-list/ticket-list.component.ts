@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
 import * as ticketActions from '../../../store/ticket.actions';
 import { IError, ILoader, ISearchResult } from 'src/app/store/ticket.reducer';
@@ -17,20 +16,15 @@ interface State {
   templateUrl: './ticket-list.component.html',
   styleUrls: ['./ticket-list.component.scss']
 })
-export class TicketListComponent implements OnInit {
+export class TicketListComponent {
   title = 'Support Tickets';
-  tickets$: Observable<ISupportTicket[]>;
-  errors$: Observable<IError>;
-  searchResult$: Observable<ISearchResult>;
-  loader$: Observable<ILoader>;
+  searchResult$ = this.store.pipe(select('searchResult'));
+  loader$ = this.store.pipe(select('loader'));
+  tickets$ = this.store.pipe(select('tickets'));
+  errors$ = this.store.pipe(select('errors'));
+  searchStr = '';
 
-  constructor(private store: Store<State>) {}
-
-  ngOnInit() {
-    this.loader$ = this.store.pipe(select('loader'));
-    this.tickets$ = this.store.pipe(select('tickets'));
-    this.errors$ = this.store.pipe(select('errors'));
-    this.searchResult$ = this.store.pipe(select('searchResult'));
+  constructor(private store: Store<State>) {
     this.loadTickets();
   }
 
@@ -42,9 +36,5 @@ export class TicketListComponent implements OnInit {
   deleteTicket(event) {
     this.store.dispatch(ticketActions.deleting());
     this.store.dispatch(ticketActions.deleteTicket({ id: event.id }));
-  }
-
-  search(searchStr: string) {
-    this.store.dispatch(ticketActions.search({ searchStr }));
   }
 }

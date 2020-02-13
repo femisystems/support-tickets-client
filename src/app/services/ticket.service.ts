@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError, map } from 'rxjs/operators';
-import { Observable, throwError, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
 
 @Injectable()
