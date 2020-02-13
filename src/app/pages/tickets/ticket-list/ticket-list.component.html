@@ -7,7 +7,7 @@
   <!-- TICKET LIST -->
   <ng-container *ngIf="tickets$ | async as tickets">
     <div *ngIf="!tickets.length" class="notification-box notification-box-md default-msg">There are currently no tickets available!</div>
-    <table>
+    <table *ngIf="tickets.length">
       <thead>
         <tr>
           <th>Ticket ID #</th>
