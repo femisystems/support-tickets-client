@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ISupportTicket } from 'src/app/interfaces/ticket';
 import * as ticketActions from '../../../store/ticket.actions';
-import { IError, ILoader, ISearchResult } from 'src/app/store/ticket.reducer';
+import { IError, ILoader } from 'src/app/store/ticket.reducer';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { formMode as Mode } from 'src/app/interfaces/forms';
 
 interface State {
   tickets: ISupportTicket[],
   errors: IError,
   loader: ILoader,
-  searchResult: ISearchResult
 }
 
 @Component({
@@ -18,14 +20,34 @@ interface State {
 })
 export class TicketListComponent {
   title = 'Support Tickets';
-  searchResult$ = this.store.pipe(select('searchResult'));
+  formMode = Mode;
   loader$ = this.store.pipe(select('loader'));
-  tickets$ = this.store.pipe(select('tickets'));
   errors$ = this.store.pipe(select('errors'));
-  searchStr = '';
+  private searchFilterSubject = new BehaviorSubject<string>('');
+  tickets$ = this.getFilteredTickets();
 
   constructor(private store: Store<State>) {
     this.loadTickets();
+  }
+
+  getFilteredTickets() {
+    return combineLatest([
+        this.store.pipe(select('tickets')),
+        this.searchFilterSubject.asObservable()
+      ])
+      .pipe(
+        map(([tickets, str]) => {
+          if (str.length) {
+            return tickets.filter(ticket => {
+              const isInDescription = ticket.description.toLowerCase().indexOf(str) > -1;
+              const isInTitle = ticket.title.toLowerCase().indexOf(str) > -1;
+      
+              return isInTitle || isInDescription;
+            });
+          }
+          return tickets;
+        })
+      );
   }
 
   loadTickets() {
@@ -33,8 +55,12 @@ export class TicketListComponent {
     this.store.dispatch(ticketActions.getAll());
   }
 
-  deleteTicket(event) {
+  deleteTicket(event, id: number) {
     this.store.dispatch(ticketActions.deleting());
-    this.store.dispatch(ticketActions.deleteTicket({ id: event.id }));
+    this.store.dispatch(ticketActions.deleteTicket({ id: +id }));
+  }
+
+  search(searchStr: string) {
+    this.searchFilterSubject.next(searchStr.trim());
   }
 }

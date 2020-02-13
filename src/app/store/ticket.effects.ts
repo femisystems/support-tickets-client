@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, from, throwError, of } from 'rxjs';
-import { map, mergeMap, catchError, tap, withLatestFrom, filter } from 'rxjs/operators';
+import { EMPTY, of } from 'rxjs';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 import { TicketService } from '../services/ticket.service';
 import * as ticketActions from './ticket.actions';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { ISupportTicket } from '../interfaces/ticket';
 import { IError, ILoader } from './ticket.reducer';
-import { Router } from '@angular/router';
 
 const { AppErrors } = ticketActions;
 
@@ -19,8 +18,7 @@ export class TicketEffects {
     private store: Store<{tickets: ISupportTicket[], errors: IError, loader: ILoader}>,
     private actions$: Actions,
     private ticketService: TicketService,
-    private toastr: ToastrService,
-    private router: Router
+    private toastr: ToastrService
   ) {}
 
   getAll$ = createEffect(() => this.actions$.pipe(

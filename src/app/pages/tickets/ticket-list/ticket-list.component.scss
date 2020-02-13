@@ -20,3 +20,77 @@
     }
   }
 }
+
+a {
+  text-decoration: none;
+  color: var(--pry);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+table {
+  font-size: 14px;
+  width: 100%;
+  color: var(--pry);
+  border-collapse: collapse;
+
+  thead, tbody, tr  {
+    width: 100%;
+  }
+}
+
+table thead {
+  font-weight: bold;
+  border-bottom: 2px solid var(--border-pry);
+}
+
+table {
+  tr {
+    height: 50px;
+    border-bottom: 1px solid var(--border-pry);
+  }
+
+  tbody tr {
+    cursor: pointer;
+
+    &:hover {
+      background: hsl(223, 21, 98);
+    }
+  }
+
+  td:first-child, th {
+    text-align: center;
+  }
+}
+
+.priority-col, .status-col {
+  text-align: center;
+}
+
+.btn {
+  border: 0;
+  margin: 0 .5rem;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: 28px;
+  font-size: 14px;
+}
+
+.btn-edit {
+  color: var(--pry);
+
+  &:hover {
+    color: black;
+  }
+}
+
+.btn-delete {
+  color: hsl(360, 88, 70);
+
+  &:hover {
+    color: hsl(360, 88, 56);
+  }
+}
