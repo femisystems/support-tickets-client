@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { TicketService } from '../services/ticket.service';
 import * as ticketActions from './ticket.actions';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ export class TicketEffects {
 
   getAll$ = createEffect(() => this.actions$.pipe(
     ofType(ticketActions.TICKETS_GETALL),
-    mergeMap(() => this.ticketService.all()
+    mergeMap((router) => this.ticketService.all(router)
       .pipe(
         map(tickets => {
           this.store.dispatch(ticketActions.done())

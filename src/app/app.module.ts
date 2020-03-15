@@ -12,6 +12,7 @@ import { TicketService } from './services/ticket.service';
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromTicketReducer from './store/ticket.reducer';
@@ -44,6 +45,7 @@ import { StatsGeneratorPipe } from './pipes/stats-generator.pipe';
       errors: fromTicketReducer.errorReducer,
       loader: fromTicketReducer.loaderReducer,
     }),
+    StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([TicketEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

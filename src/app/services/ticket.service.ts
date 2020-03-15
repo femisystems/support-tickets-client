@@ -13,7 +13,8 @@ export class TicketService {
     this.supportTickets = new Subject();
   }
 
-  all(): Observable<ISupportTicket[]> {
+  all(router): Observable<ISupportTicket[]> {
+    console.log('router ::', router);
     return this.http.get<ISupportTicket[]>(this.baseUrl);
   }
 

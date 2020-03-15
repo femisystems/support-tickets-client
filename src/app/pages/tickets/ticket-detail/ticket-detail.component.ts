@@ -23,7 +23,10 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.route.queryParamMap.subscribe(res => this.formMode = res.get('mode')),
-      this.route.data.subscribe(data => this.ticket$ = data.ticket)
+      this.route.data.subscribe(data => {
+        console.log(data);
+        this.ticket$ = data.ticket;
+      })
     )
   }
 
